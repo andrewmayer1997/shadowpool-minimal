@@ -129,8 +129,12 @@ export const submitWork = async function (
     log.debug(`Full nonce: ${"0x" + extranonce + nonce}`);
     log.debug(`Length: ${("0x" + extranonce + nonce).length}`);
 
+    const genNonce = function (): string {
+      return "0x" + String(extranonce + nonce).padStart(14, "0");
+    };
+
     return web3.eth.submitWork(
-      "0x" + "00" + extranonce + nonce,
+      genNonce(),
       shares.get(id)!.powhash,
       // @ts-ignore
       autogenkey
