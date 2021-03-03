@@ -3,3 +3,4 @@ build
 geth
 third-party
 *.log
+dist
