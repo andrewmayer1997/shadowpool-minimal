@@ -25,7 +25,9 @@ export const calcPoolHashrate = function (): number {
   let poolHashrate = 0;
 
   workers.forEach((w, key) => {
-    poolHashrate += Number(w.hashrate);
+    if (w.online) {
+      poolHashrate += Number(w.hashrate);
+    }
   });
 
   return poolHashrate;
@@ -35,9 +37,9 @@ export const addWorker = function (uid: UID, data: Worker) {
   if (!workers.get(uid)) {
     activeWorkers++;
     workers.set(uid, data);
+    UIDbyName.set(data.name, uid);
   }
   workers.get(uid)!.online = true;
-  UIDbyName.set(data.name, uid);
   calcExtranonce();
 };
 
@@ -48,13 +50,16 @@ export const updateHashrate = function (name: string, hashrate: string) {
 
 export const makeOnline = function (name: string) {
   // @ts-ignore
+  workers.get(UIDbyName.get(name))?.online = true;
+  // @ts-ignore
+  /*
   if ((workers.get(UIDbyName.get(name))?.online = false)) {
     // @ts-ignore
     log.error(
       // @ts-ignore
       `Wtf? Worker ${workers.get(UIDbyName.get(name))?.name} should be ONLINE!`
     );
-  }
+  } */
 };
 
 export const removeWorker = function (ip: string) {

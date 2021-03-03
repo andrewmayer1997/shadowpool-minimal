@@ -68,6 +68,7 @@ export const submitHashrate = async function (
   req: jsonrpc.request,
   ip: string
 ): Promise<jsonrpc.response> {
+  makeOnline(req.worker!.toString());
   // @ts-ignore
   updateHashrate(req.worker!.toString(), req.params[0]);
   return <jsonrpc.response>{

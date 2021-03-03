@@ -61,7 +61,7 @@ namespace stratum {
               serialize(<jsonrpc.notification>{
                 method: "mining.set_difficulty",
                 // ~2.5G
-                params: [1.1],
+                params: [0.1],
               }) + "\n"
             );
           }, 1000);
