@@ -126,12 +126,14 @@ export const submitWork = async function (
       extranonce = workers.get(UID)?.extranonce;
     }
 
-    log.debug(`Full nonce: ${"0x" + extranonce + nonce}`);
-    log.debug(`Length: ${("0x" + extranonce + nonce).length}`);
+    
 
     const genNonce = function (): string {
       return "0x" + String(extranonce + nonce).padStart(14, "0");
     };
+
+    log.debug(`Full nonce: ${genNonce()}`);
+    log.debug(`Length: ${(genNonce()).length}`);
 
     return web3.eth.submitWork(
       genNonce(),
