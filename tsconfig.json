@@ -2,7 +2,7 @@
   "compilerOptions": {
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
-    "target": "es2017",
+    "target": "es2018",
     "module": "commonjs",
     "lib": ["esnext"],
     "allowJs": true,
@@ -14,5 +14,5 @@
     "moduleResolution": "node"
   },
   "include": ["src"],
-  "exclude": ["src/view"]
+  "exclude": ["src/core/view/front"]
 }

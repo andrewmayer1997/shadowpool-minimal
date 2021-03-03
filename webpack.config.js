@@ -1,4 +1,5 @@
 const nodeExternals = require("webpack-node-externals");
+const path = require('path')
 module.exports = {
   externals: [nodeExternals()],
   mode: "production",
@@ -12,7 +13,11 @@ module.exports = {
   },
   module: {
     rules: [
-      { test: /\.tsx?$/, loader: "ts-loader" },
+      {
+        test: /\.tsx?$/,
+        loader: "ts-loader",
+        exclude: path.resolve(__dirname,"./src/core/view/front"),
+      },
     ],
   },
 };
