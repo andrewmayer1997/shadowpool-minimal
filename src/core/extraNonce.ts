@@ -18,10 +18,15 @@ export const calc = function () {
   workers.forEach((w, key) => {
     stratum.sendNotifyTo(w.ip, <jsonrpc.notification>{
       method: "mining.set_extranonce",
-      params: ["0x" + (Math.floor(last + step)).toString(16).padStart(3, '0')]
+      params: [
+        "0x" +
+          Math.floor(last + step)
+            .toString(16)
+            .padStart(3, "0"),
+      ],
     });
-    w.extranonce = (last + step).toString(16).padStart(3, '0');
+    w.extranonce = (last + step).toString(16).padStart(3, "0");
     last += step;
-    log.debug(`Worker: ${w.name}, start at ${w.extranonce}, step ${step}`)
+    log.debug(`Worker: ${w.name}, start at ${w.extranonce}, step ${step}`);
   });
 };

@@ -39,14 +39,6 @@ export const auth = async function (
   req: jsonrpc.request,
   ip: string
 ): Promise<jsonrpc.response> {
-  // @ts-ignore
-  // @ts-ignore
-  addWorker(req.params[1], <Worker>{
-    name: req.worker!.toString(),
-    // @ts-ignore
-    hashrate: "-1",
-    ip: ip,
-  });
   return <jsonrpc.response>{
     id: req.id,
     result: true,
@@ -65,6 +57,13 @@ export const submitHashrate = async function (
   req: jsonrpc.request,
   ip: string
 ): Promise<jsonrpc.response> {
+  // @ts-ignore
+  addWorker(req.params[1], <Worker>{
+    name: req.worker!.toString(),
+    // @ts-ignore
+    hashrate: req.params[0],
+    ip: ip,
+  });
   makeOnline(req.worker!.toString());
   // @ts-ignore
   updateHashrate(req.worker!.toString(), req.params[0]);
