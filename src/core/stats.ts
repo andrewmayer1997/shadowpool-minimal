@@ -13,7 +13,7 @@ export type UID = string;
 
 // key is worker UID(!!!)
 export let workers = new Map<UID, Worker>();
-export let activeWorkers = 0;
+//export let activeWorkers = 0;
 export let UIDbyName = new Map<string, string>();
 export let accepted: number = 0;
 
@@ -33,13 +33,19 @@ export const calcPoolHashrate = function (): number {
   return poolHashrate;
 };
 
+export const getActiveWorkers = function (): number {
+  let num = 0;
+  workers.forEach((w, key) => {
+    if (w.online) num++;
+  });
+  return num;
+};
+
 export const addWorker = function (uid: UID, data: Worker) {
   if (!workers.get(uid)) {
-    activeWorkers++;
-    workers.set(uid, data);
     UIDbyName.set(data.name, uid);
   }
-  workers.get(uid)!.online = true;
+  workers.set(uid, data);
   calcExtranonce();
 };
 
@@ -49,17 +55,19 @@ export const updateHashrate = function (name: string, hashrate: string) {
 };
 
 export const makeOnline = function (name: string) {
-  // @ts-ignore
-  workers.get(UIDbyName.get(name))?.online = true;
+  let UID = UIDbyName.get(name);
+  if (UID && workers.get(UID)) {
+    // @ts-ignore
+    workers.get(UIDbyName.get(name))?.online = true;
+  }
 };
 
 export const removeWorker = function (ip: string) {
   workers.forEach((w, key) => {
     if (w.ip == ip) {
       w.online = false;
-      activeWorkers--;
       log.info(`Worker ${w.name} is offline!`);
-      log.info(`Workers: ${activeWorkers}/${workers.size}}`);
+      log.info(`Workers: ${getActiveWorkers()}/${workers.size}}`);
     }
   });
 };

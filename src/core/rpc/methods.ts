@@ -7,7 +7,6 @@ import {
   Worker,
   makeOnline,
   increaseAccepted,
-  updateHashrate,
 } from "../stats";
 
 export const submit = async function (
@@ -63,10 +62,8 @@ export const submitHashrate = async function (
     // @ts-ignore
     hashrate: req.params[0],
     ip: ip,
+    online: true,
   });
-  makeOnline(req.worker!.toString());
-  // @ts-ignore
-  updateHashrate(req.worker!.toString(), req.params[0]);
   return <jsonrpc.response>{
     id: req.id,
     result: true,

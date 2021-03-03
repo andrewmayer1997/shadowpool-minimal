@@ -1,4 +1,4 @@
-import { activeWorkers, workers } from "./stats";
+import { getActiveWorkers, workers } from "./stats";
 import { stratum } from "./server";
 import { jsonrpc } from "./rpc/jsonrpc";
 import log from "../core/utils/logger";
@@ -12,7 +12,7 @@ export const getExtranonceByName = function () {
 };
 
 export const calc = function () {
-  const step = Math.floor(Max / activeWorkers);
+  const step = Math.floor(Max / getActiveWorkers());
   last -= step;
 
   workers.forEach((w, key) => {

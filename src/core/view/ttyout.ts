@@ -1,5 +1,5 @@
 import "../server";
-import { workers, activeWorkers, accepted } from "../stats";
+import { workers, accepted, getActiveWorkers } from "../stats";
 import { whoMinedLastBlock, lastBlock, shares } from "../daemon";
 import { calcPoolHashrate } from "../stats";
 import { web3 } from "../daemon";
@@ -9,7 +9,7 @@ import remote from "../utils/remoteLogger";
 
 export const getBlocktime = async function (stat: netstat): Promise<number> {
   //remote.info(calcPoolHashrate());
-  return Number((stat.hashrate / (calcPoolHashrate() )) * stat.blocktime);
+  return Number((stat.hashrate / calcPoolHashrate()) * stat.blocktime);
 };
 
 export let lastBlockAt = new Date();
@@ -60,7 +60,7 @@ const update = async function () {
     );
     remote.info(`Hashrate: ${hashrate < 0 ? "?" : hashrate.toString() + "MH"}`);
     //console.log(`Hashrate(2): ${(await web3.eth.getHashrate()) / 1000000} MH`);
-    remote.info(`Workers: ${activeWorkers}/${workers.size}`);
+    remote.info(`Workers: ${getActiveWorkers()}/${workers.size}`);
     remote.info(`Last block: ${lastBlock}`);
     remote.info(`Mined by: ${whoMinedLastBlock}`);
     //1 == 1 ? 2 : 2 == 2 ? 3 : 0;
