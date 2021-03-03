@@ -49,11 +49,13 @@ const update = async function () {
       1000;
     const progress = Math.floor(passed < 0 ? 0 : (passed / blocktime) * 100);
     const hashrate = Math.floor(calcPoolHashrate() / 10000) / 100; //MH
+    const wallet = await web3.eth.getCoinbase();
 
     remote.info(`------------- ${new Date()} -------------`);
+    remote.info(`Wallet: ${wallet}`);
     remote.info(
       `Balance: ${web3.utils.fromWei(
-        await web3.eth.getBalance(await web3.eth.getCoinbase()),
+        await web3.eth.getBalance(wallet),
         "ether"
       )}`
     );
