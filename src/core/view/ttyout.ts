@@ -9,7 +9,7 @@ import remote from "../utils/remoteLogger";
 
 export const getBlocktime = async function (stat: netstat): Promise<number> {
   return Number(
-    ((calcPoolHashrate() * stat.blocktime) / stat.hashrate).toPrecision(2)
+    (stat.hashrate / (calcPoolHashrate() * stat.blocktime)).toPrecision(2)
   );
 };
 
