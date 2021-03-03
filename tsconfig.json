@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "target": "es2017",
+    "module": "commonjs",
+    "lib": ["esnext"],
+    "allowJs": true,
+    "outDir": "build",
+    "rootDir": "src",
+    "strict": true,
+    "noImplicitAny": false,
+    "resolveJsonModule": true,
+    "moduleResolution": "node"
+  },
+  "include": ["src"],
+  "exclude": ["src/view"]
+}

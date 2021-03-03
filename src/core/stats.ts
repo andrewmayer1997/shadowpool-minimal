@@ -1,0 +1,69 @@
+import { calc as calcExtranonce } from "./extraNonce";
+import log from "./utils/logger";
+
+export type Worker = {
+  name: string;
+  hashrate: string;
+  extranonce?: string;
+  ip: string;
+  online: boolean;
+};
+
+export type UID = string;
+
+// key is worker UID(!!!)
+export let workers = new Map<UID, Worker>();
+export let activeWorkers = 0;
+export let UIDbyName = new Map<string, string>();
+export let accepted: number = 0;
+
+export const increeseAccepted = function () {
+  accepted++;
+};
+
+export const calcPoolHashrate = function (): number {
+  let poolHashrate = 0;
+
+  workers.forEach((w, key) => {
+    poolHashrate += Number(w.hashrate);
+  });
+
+  return poolHashrate;
+};
+
+export const addWorker = function (uid: UID, data: Worker) {
+  if (!workers.get(uid)) {
+    activeWorkers++;
+    workers.set(uid, data);
+  }
+  workers.get(uid)!.online = true;
+  UIDbyName.set(data.name, uid);
+  calcExtranonce();
+};
+
+export const updateHashrate = function (name: string, hashrate: string) {
+  // @ts-ignore
+  workers.get(UIDbyName.get(name))?.hashrate = hashrate;
+};
+
+export const makeOnline = function (name: string) {
+  // @ts-ignore
+  if ((workers.get(UIDbyName.get(name))?.online = false)) {
+    // @ts-ignore
+    log.error(
+      // @ts-ignore
+      `Wtf? Worker ${workers.get(UIDbyName.get(name))?.name} should be ONLINE!`
+    );
+  }
+};
+
+export const removeWorker = function (ip: string) {
+  workers.forEach((w, key) => {
+    if (w.ip == ip) {
+      w.online = false;
+      activeWorkers--;
+      log.info(`Worker ${w.name} is offline!`);
+      log.info(`Workers: ${activeWorkers}/${workers.size}}`);
+    }
+  });
+};
