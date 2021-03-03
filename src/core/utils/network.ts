@@ -32,6 +32,6 @@ export const getStat = async function (
   return <netstat>{
     hashrate: (difficulty / blockTime)/GH,
     blocktime: blockTime,
-    diff: difficulty/TH,
+    diff: difficulty
   };
 };
