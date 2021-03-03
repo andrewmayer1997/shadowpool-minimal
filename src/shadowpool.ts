@@ -14,3 +14,7 @@ try {
   console.log(`<----------------- ERROR! ----------------->`);
   console.error(e);
 }
+
+process.on("uncaughtException", function (err) {
+  console.error("Caught exception: " + err);
+});
