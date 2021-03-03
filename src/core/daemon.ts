@@ -129,7 +129,7 @@ export const submitWork = async function (
     
 
     const genNonce = function (): string {
-      return "0x" + String(extranonce + nonce).padStart(14, "0");
+      return "0x" + String(extranonce + nonce).padStart(16, "0");
     };
 
     log.debug(`Full nonce: ${genNonce()}`);
