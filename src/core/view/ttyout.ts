@@ -13,7 +13,7 @@ export const getBlocktime = async function (stat: netstat): Promise<number> {
   );
 };
 
-export let lastBlockAt: undefined | Date;
+export let lastBlockAt = new Date();
 
 export const updateLastBlockDate = function (date: string) {
   lastBlockAt = new Date(date);
