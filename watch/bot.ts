@@ -10,19 +10,27 @@ const bot = new TelegramBot(token as string, <TelegramBot.ConstructorOptions>{
 });
 
 watch.on("error", async () => {
+  if (bot.isPolling()) {
+    await bot.stopPolling();
+  }
+
   bot.getUpdates().then((upds) => {
     upds.forEach((upd) => {
       bot
-        .sendMessage(upd.update_id, "Error occurred. Shadowpool was restarted!")
+        .sendMessage(
+          upd.message!.chat.id,
+          "Error occurred. Shadowpool was restarted!"
+        )
         .then(() => {
           bot
             .sendMessage(
-              upd.update_id,
-              "Check more detail: \nless ~/.shadowlogs/error-debug.log \nless ~/.shadowlogs/error.log"
+              upd.message!.chat.id,
+              `Check the more details:\n<pre><code class="language-bash">less ~/.shadowlogs/error-debug.log\nless ~/.shadowlogs/error.log\n</code></pre>`,
+              { parse_mode: "HTML" }
             )
             .then(() => {
               bot.sendMessage(
-                upd.update_id,
+                upd.message!.chat.id,
                 "p.s. scroll to end hotkeys: Shift + G"
               );
             });
@@ -31,8 +39,9 @@ watch.on("error", async () => {
   });
 });
 
-bot.onText(/\/start/, (msg, match) => {
+/*bot.onText(/\/start/, (msg, match) => {
   const chatId = msg.chat.id;
   bot.sendMessage(chatId, "You have subscribed to pool notifications");
   console.log("Add new client.");
 });
+*/

@@ -3,14 +3,14 @@
     "build": "webpack",
     "build-all": "yarn install; yarn build; yarn geth-build",
     "geth-build": "scripts/patching_geth.sh",
-    "start": "scripts/start_pool.sh",
-    "start-view": "node dist/shadow.js",
+    "start": "scripts/start_with_name.sh \"node-shadowpool\" scripts/start_pool.sh",
+    "start-view": "scripts/start_with_name.sh \"node-shadowpool-view\" node dist/shadow.js",
     "stop": "killall node",
     "view": "tree -L 4 -I 'node_modules|build|third-party'",
     "geth-test": "cd test/node; start_geth_test.sh",
-    "geth-prod": "scripts/start_geth.sh",
-    "testnet": "scripts/testnet.sh",
-    "watch": "scripts/start_watch.sh"
+    "geth-prod": "scripts/start_with_name.sh \"node-geth-prod\" scripts/start_geth.sh",
+    "testnet": "scripts/start_with_name.sh \"node-testnet\" scripts/testnet.sh",
+    "watch": "scripts/start_with_name.sh \"node-watch\" scripts/start_watch.sh"
   },
   "dependencies": {
     "@types/node": "^14.14.31",

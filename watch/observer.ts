@@ -7,8 +7,7 @@ class WhatchLog extends EventEmitter {
   constructor() {
     super();
     console.log("Init observer...");
-    //this.watch();
-    setInterval(this.watch, 1000);
+    setInterval(this.watch, 10000);
   }
   public lastSize = 0;
   public watch = () => {
@@ -24,15 +23,15 @@ class WhatchLog extends EventEmitter {
     });
   };
   public restart = function () {
-    console.log("restarting...")
-    /*const stdout = child_process.execSync(
-      `killall node; cd ${path.join(
+    console.log("restarting...");
+    const stdout = child_process.execSync(
+      `pkill -f "node-shadowpool"; cd ${path.join(
         // @ts-ignore
         process.env.HOME,
         "NODE",
         "shadowpool-minimal"
       )}; yarn start;`
-    );*/
+    );
   };
 }
 export const watch = new WhatchLog();
