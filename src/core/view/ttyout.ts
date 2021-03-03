@@ -28,7 +28,7 @@ export const calcBlocksFromShares = function () {
 
 export const prettyTime = function (sec: number): string {
   return sec > 60 * 60 * 24
-    ? (sec / (60 * 60 * 24)).toString() + "d"
+    ? (sec / (60 * 60 * 24)).toPrecision(4) + "d"
     : sec > 60 * 60
     ? (sec / (60 * 60)).toPrecision(2) + "h"
     : sec > 60
