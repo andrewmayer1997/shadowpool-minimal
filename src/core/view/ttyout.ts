@@ -9,7 +9,7 @@ import remote from "../utils/remoteLogger";
 
 export const getBlocktime = async function (stat: netstat): Promise<number> {
   remote.info(calcPoolHashrate());
-  return Number((stat.hashrate / (calcPoolHashrate() / GH)) * stat.blocktime);
+  return Number((stat.hashrate / (calcPoolHashrate() )) * stat.blocktime);
 };
 
 export let lastBlockAt = new Date();
@@ -39,7 +39,7 @@ export const prettyTime = function (sec: number): string {
 };
 
 const update = async function () {
-  getStat(10).then(async (stat) => {
+  getStat().then(async (stat) => {
     console.clear();
     const blocktime = await getBlocktime(stat);
     const passed =
