@@ -18,10 +18,7 @@ const stream = fs.createWriteStream(
 function logToTransport(logObject: ILogObject) {
   const log = logObject.toJSON();
   stream.write(log.argumentsArray + "\n");
-  back.sendNotify(<jsonrpc.notification>{
-    method: `update`,
-    params: log.argumentsArray[0],
-  });
+  back.sendNotify(log.argumentsArray[0].toString())
 }
 
 const remote: Logger = new Logger();

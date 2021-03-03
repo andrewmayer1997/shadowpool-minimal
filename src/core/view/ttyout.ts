@@ -7,19 +7,19 @@ import "../utils/network";
 import { getStat, netstat } from "../utils/network";
 import remote from '../utils/remoteLogger'
 
-const getBlocktime = async function (stat: netstat): Promise<number> {
+export const getBlocktime = async function (stat: netstat): Promise<number> {
   return Number(
     ((calcPoolHashrate() * stat.blocktime) / stat.hashrate).toPrecision(2)
   );
 };
 
-let lastBlockAt: undefined | Date;
+export let lastBlockAt: undefined | Date;
 
 export const updateLastBlockDate = function (date: string) {
   lastBlockAt = new Date(date);
 };
 
-const calcBlocksFromShares = function () {
+export const calcBlocksFromShares = function () {
   let total = 0;
   shares.forEach((s, key) => {
     if (s.isBlock) total++;
@@ -27,7 +27,7 @@ const calcBlocksFromShares = function () {
   return total;
 };
 
-const prettyTime = function (sec: number): string {
+export const prettyTime = function (sec: number): string {
   return sec > 60 * 60 * 24
     ? (sec / (60 * 60 * 24)).toPrecision(2) + "d"
     : sec > 60 * 60
@@ -50,7 +50,7 @@ const update = async function () {
     const progress = Math.floor(passed < 0 ? 0 : (passed / blocktime) * 100);
     const hashrate = Math.floor(calcPoolHashrate() / 10000) / 100; //MH
 
-    remote.info("------------------------");
+    remote.info("");
     remote.info(
       `Balance: ${web3.utils.fromWei(
         await web3.eth.getBalance(await web3.eth.getCoinbase()),
@@ -67,7 +67,7 @@ const update = async function () {
     remote.info(`Time passed: ${prettyTime(passed)}`);
     remote.info(`Progress: ${progress < 0 ? "?" : progress.toString() + "%"}`);
     remote.info(`Total shares: ${accepted}/${calcBlocksFromShares()}`);
-    remote.info("------------------------");
+    remote.info("\n");
   });
 };
 
