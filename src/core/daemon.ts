@@ -114,13 +114,13 @@ export const submitWork = async function (
   let UID: string;
   try {
     if (!UIDbyName.get(name)) {
-      throw new Error(`CANNOT FIND EXTRANONCE FOR THE WORKER!`);
+      throw new Error(`This worker doesn't exist!`);
     } else {
       //@ts-ignore
       UID = UIDbyName.get(name)?.toString();
     }
     if (!workers.get(UID)) {
-      throw new Error(`CANNOT FIND EXTRANONCE FOR THE WORKER!`);
+      throw new Error(`This worker doesn't exist!`);
     } else {
       // @ts-ignore
       extranonce = workers.get(UID)?.extranonce;
@@ -137,10 +137,11 @@ export const submitWork = async function (
     );
   } catch (e) {
     log.error(e);
-    throw new RpcError(<jsonrpc.error>{
-      code: 400,
-      message: "Cannot process the share!",
-      data: e,
-    });
+    //throw new RpcError(<jsonrpc.error>{
+    //  code: 400,
+    //  message: "",
+    //  data: e,
+    //});
+    return false;
   }
 };
