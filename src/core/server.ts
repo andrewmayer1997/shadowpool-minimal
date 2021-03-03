@@ -42,7 +42,7 @@ namespace stratum {
         .listen(port, host)
         .on("connection", (s) => {
           log.info(`Max listeners: 5`);
-          s.setMaxListeners(5);
+          s.setMaxListeners(100);
 
           s.setKeepAlive(true);
           s.setEncoding("ascii");
@@ -60,8 +60,8 @@ namespace stratum {
             s.write(
               serialize(<jsonrpc.notification>{
                 method: "mining.set_difficulty",
-                // ~2.5G
-                params: [0.1],
+                // ~10G
+                params: [2.5],
               }) + "\n"
             );
           }, 1000);
