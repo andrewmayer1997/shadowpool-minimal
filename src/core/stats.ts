@@ -51,15 +51,6 @@ export const updateHashrate = function (name: string, hashrate: string) {
 export const makeOnline = function (name: string) {
   // @ts-ignore
   workers.get(UIDbyName.get(name))?.online = true;
-  // @ts-ignore
-  /*
-  if ((workers.get(UIDbyName.get(name))?.online = false)) {
-    // @ts-ignore
-    log.error(
-      // @ts-ignore
-      `Wtf? Worker ${workers.get(UIDbyName.get(name))?.name} should be ONLINE!`
-    );
-  } */
 };
 
 export const removeWorker = function (ip: string) {
