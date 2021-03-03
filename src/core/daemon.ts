@@ -126,11 +126,11 @@ export const submitWork = async function (
       extranonce = workers.get(UID)?.extranonce;
     }
 
-    log.debug(`Full nonce: ${"0x" + "00" + extranonce + nonce}`);
+    log.debug(`Full nonce: ${"0x" + extranonce + nonce}`);
     log.debug(`Length: ${("0x" + extranonce + nonce).length}`);
 
     return web3.eth.submitWork(
-      "0x" + "00" + extranonce + nonce,
+      "0x" + extranonce + nonce,
       shares.get(id)!.powhash,
       // @ts-ignore
       autogenkey

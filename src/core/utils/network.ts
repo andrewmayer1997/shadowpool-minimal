@@ -19,9 +19,9 @@ export const getStat = async function (
     sampleSize;
   let difficulty = (await web3.eth.getBlock(blockNum)).difficulty; // You can sum up the last n-blocks and average; this is mathematically sound.
 
-  log.debug(`Diff ${difficulty/1000000000} G`);
+  log.debug(`Diff ${difficulty/1000000000000} TH`);
   log.debug(`Blocktime ${blockTime} ms`);
-  log.debug(`Network hashrate: ${difficulty / blockTime / 1000000000} G`);
+  log.debug(`Network hashrate: ${difficulty / blockTime / 1000000000000} TH`);
 
   return <netstat>{
     hashrate: difficulty / blockTime,

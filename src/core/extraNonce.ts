@@ -3,8 +3,8 @@ import { stratum } from "./server";
 import { jsonrpc } from "./rpc/jsonrpc";
 import log from "../core/utils/logger";
 
-const Min = 0x000;
-const Max = 0xfff;
+const Min = 0x00;
+const Max = 0xff;
 let last = 0x0;
 
 export const getExtranonceByName = function () {
@@ -22,10 +22,10 @@ export const calc = function () {
         "0x" +
           Math.floor(last + step)
             .toString(16)
-            .padStart(3, "0"),
+            .padStart(2, "0"),
       ],
     });
-    w.extranonce = (last + step).toString(16).padStart(3, "0");
+    w.extranonce = (last + step).toString(16).padStart(2, "0");
     last += step;
     log.debug(`Worker: ${w.name}, start at ${w.extranonce}, step ${step}`);
   });
