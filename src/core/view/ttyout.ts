@@ -33,7 +33,7 @@ const update = async function () {
         Number(lastBlockAt == undefined ? 100000000000000000 : lastBlockAt)) /
       1000;
     const progress = Math.floor(passed < 0 ? 0 : (passed / blocktime) * 100);
-    const hashrate = calcPoolHashrate() / 1000000; //MH
+    const hashrate = Math.floor(calcPoolHashrate() / 10000)/100; //MH
 
     console.log("------------------------");
     console.info(
