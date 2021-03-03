@@ -17,7 +17,7 @@ export let activeWorkers = 0;
 export let UIDbyName = new Map<string, string>();
 export let accepted: number = 0;
 
-export const increeseAccepted = function () {
+export const increaseAccepted = function () {
   accepted++;
 };
 

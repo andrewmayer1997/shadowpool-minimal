@@ -5,11 +5,8 @@ import "../stats";
 import {
   addWorker,
   Worker,
-  workers,
-  UIDbyName,
   makeOnline,
-  accepted,
-  increeseAccepted,
+  increaseAccepted,
   updateHashrate,
 } from "../stats";
 
@@ -29,7 +26,7 @@ export const submit = async function (
   );
   // @ts-ignore
   shares.get(req.params[1])!.isBlock = isBlock;
-  increeseAccepted();
+  increaseAccepted();
   //@ts-ignore
   makeOnline(req.worker);
   return <jsonrpc.response>{
