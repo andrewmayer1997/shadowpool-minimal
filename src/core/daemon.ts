@@ -130,7 +130,7 @@ export const submitWork = async function (
     log.debug(`Length: ${("0x" + extranonce + nonce).length}`);
 
     return web3.eth.submitWork(
-      "0x" + extranonce + nonce,
+      "0x" + extranonce.padStart(2, '0') + nonce,
       shares.get(id)!.powhash,
       // @ts-ignore
       autogenkey

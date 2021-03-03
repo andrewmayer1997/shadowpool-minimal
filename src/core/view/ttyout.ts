@@ -38,7 +38,7 @@ export const prettyTime = function (sec: number): string {
 };
 
 const update = async function () {
-  getStat(1000).then(async (stat) => {
+  getStat(10).then(async (stat) => {
     console.clear();
     const blocktime = await getBlocktime(stat);
     const passed =
