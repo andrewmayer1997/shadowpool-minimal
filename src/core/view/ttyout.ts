@@ -5,7 +5,7 @@ import { calcPoolHashrate } from "../stats";
 import { web3 } from "../daemon";
 import "../utils/network";
 import { getStat, netstat } from "../utils/network";
-import remote from '../utils/remoteLogger'
+import remote from "../utils/remoteLogger";
 
 export const getBlocktime = async function (stat: netstat): Promise<number> {
   return Number(
@@ -41,7 +41,7 @@ export const prettyTime = function (sec: number): string {
 
 const update = async function () {
   getStat(1000).then(async (stat) => {
-    console.clear()
+    console.clear();
     const blocktime = await getBlocktime(stat);
     const passed =
       (Number(new Date()) -
@@ -50,7 +50,7 @@ const update = async function () {
     const progress = Math.floor(passed < 0 ? 0 : (passed / blocktime) * 100);
     const hashrate = Math.floor(calcPoolHashrate() / 10000) / 100; //MH
 
-    remote.info("");
+    remote.info(`Date: ${new Date().toLocaleString()}\n`);
     remote.info(
       `Balance: ${web3.utils.fromWei(
         await web3.eth.getBalance(await web3.eth.getCoinbase()),
@@ -61,12 +61,12 @@ const update = async function () {
     //console.log(`Hashrate(2): ${(await web3.eth.getHashrate()) / 1000000} MH`);
     remote.info(`Workers: ${activeWorkers}/${workers.size}`);
     remote.info(`Last block: ${lastBlock}`);
+    remote.info(`Total shares: ${accepted}/${calcBlocksFromShares()}`);
     remote.info(`Mined by: ${whoMinedLastBlock}`);
     //1 == 1 ? 2 : 2 == 2 ? 3 : 0;
     remote.info(`Expected blocktime: ${prettyTime(blocktime)}`);
     remote.info(`Time passed: ${prettyTime(passed)}`);
     remote.info(`Progress: ${progress < 0 ? "?" : progress.toString() + "%"}`);
-    remote.info(`Total shares: ${accepted}/${calcBlocksFromShares()}`);
     remote.info("\n");
   });
 };

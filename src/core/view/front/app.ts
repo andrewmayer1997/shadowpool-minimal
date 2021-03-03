@@ -8,19 +8,19 @@ const container = document.createElement("div");
 container.id = "container";
 document.body.appendChild(container);
 
+const buffer = document.createElement("div");
+buffer.id = "buffer";
+container.appendChild(buffer);
+
 function createLogMsg(data) {
-  //@ts-ignore
-  if (data=="\n") {
-    document.getElementById("container").innerHTML = ``;
-  } else {
-    const p = document.createElement("div");
-    p.innerHTML = `<p> ${data} </p>`;
-    p.className = `log-msg`;
-    p.style.padding = "8px";
-    p.style.textAlign = "left";
-    p.style.cssText = `font-family: 'Source Code Pro', monospace;`;
-    document.getElementById("container").appendChild(p);
-  }
+  const p = document.createElement("div");
+  p.innerHTML = `<p> ${data} </p>`;
+  p.className = `log-msg`;
+  p.style.padding = "8px";
+  p.style.textAlign = "left";
+  p.style.cssText = `font-family: 'Source Code Pro', monospace;`;
+  p.style.color = "white";
+  buffer.appendChild(p);
 }
 
 client.addEventListener("open", function (event) {
