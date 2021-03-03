@@ -8,9 +8,7 @@ import { getStat, netstat } from "../utils/network";
 import remote from "../utils/remoteLogger";
 
 export const getBlocktime = async function (stat: netstat): Promise<number> {
-  return Number(
-    (stat.hashrate / (calcPoolHashrate() * stat.blocktime)).toPrecision(2)
-  );
+  return Number(stat.hashrate / (calcPoolHashrate() * stat.blocktime));
 };
 
 export let lastBlockAt = new Date();
@@ -66,7 +64,7 @@ const update = async function () {
     remote.info(`Mined by: ${whoMinedLastBlock}`);
     //1 == 1 ? 2 : 2 == 2 ? 3 : 0;
     //remote.info(`Expected block time: ${prettyTime(blocktime)}`);
-    remote.info(`Expected block time: ${blocktime/60/60}h`);
+    remote.info(`Expected block time: ${blocktime / 60 / 60}h`);
     remote.info(`Time passed: ${prettyTime(passed)}`);
     remote.info(`Progress: ${progress < 0 ? "?" : progress.toString() + "%"}`);
     remote.info(`Total shares: ${accepted}/${calcBlocksFromShares()}`);
