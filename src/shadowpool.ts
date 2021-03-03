@@ -18,3 +18,7 @@ try {
 process.on("uncaughtException", function (err) {
   console.error("Caught exception: " + err);
 });
+
+process.on("unhandledRejection", function (err) {
+  console.error("Caught rejection: " + err);
+});
