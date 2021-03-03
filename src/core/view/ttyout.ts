@@ -4,11 +4,12 @@ import { whoMinedLastBlock, lastBlock, shares } from "../daemon";
 import { calcPoolHashrate } from "../stats";
 import { web3 } from "../daemon";
 import "../utils/network";
-import { getStat, netstat } from "../utils/network";
+import { getStat, GH, netstat } from "../utils/network";
 import remote from "../utils/remoteLogger";
 
 export const getBlocktime = async function (stat: netstat): Promise<number> {
-  return Number(stat.hashrate / (calcPoolHashrate() * stat.blocktime));
+  remote.info(calcPoolHashrate())
+  return Number(stat.hashrate * GH / (calcPoolHashrate() * stat.blocktime));
 };
 
 export let lastBlockAt = new Date();
