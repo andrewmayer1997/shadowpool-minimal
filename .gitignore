@@ -4,3 +4,4 @@ geth
 third-party
 *.log
 dist
+.env

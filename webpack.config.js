@@ -1,12 +1,15 @@
 const nodeExternals = require("webpack-node-externals");
-const path = require('path')
+const path = require("path");
 module.exports = {
   externals: [nodeExternals()],
   mode: "production",
   target: "node",
-  entry: "./src/shadowpool.ts",
+  entry: {
+    shadow: "./src/shadowpool.ts",
+    watch: "./watch/bot.ts",
+  },
   output: {
-    filename: "shadow.js",
+    filename: "[name].js",
   },
   resolve: {
     extensions: [".ts", ".js"],
@@ -16,7 +19,7 @@ module.exports = {
       {
         test: /\.tsx?$/,
         loader: "ts-loader",
-        exclude: path.resolve(__dirname,"./src/core/view/front"),
+        exclude: path.resolve(__dirname, "./src/core/view/front"),
       },
     ],
   },
