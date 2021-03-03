@@ -41,7 +41,7 @@ export const prettyTime = function (sec: number): string {
 const update = async function () {
   getStat().then(async (stat) => {
     console.clear();
-    const blocktime = await getBlocktime(stat);
+    //const blocktime = await getBlocktime(stat);
     const passed =
       (Number(new Date()) -
         Number(lastBlockAt == undefined ? 100000000000000000 : lastBlockAt)) /
