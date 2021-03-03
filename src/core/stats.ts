@@ -42,9 +42,7 @@ export const getActiveWorkers = function (): number {
 };
 
 export const addWorker = function (uid: UID, data: Worker) {
-  if (!workers.get(uid)) {
-    UIDbyName.set(data.name, uid);
-  }
+  UIDbyName.set(data.name, uid);
   workers.set(uid, data);
   calcExtranonce();
 };
