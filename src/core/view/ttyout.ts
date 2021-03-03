@@ -65,7 +65,7 @@ const update = async function () {
     remote.info(`Mined by: ${whoMinedLastBlock}`);
     //1 == 1 ? 2 : 2 == 2 ? 3 : 0;
     //remote.info(`Expected block time: ${prettyTime(blocktime)}`);
-    remote.info(`Expected block time: ${blocktime} d`);
+    remote.info(`Expected block time: ${prettyTime(blocktime)}`);
     remote.info(`Time passed: ${prettyTime(passed)}`);
     remote.info(`Progress: ${progress < 0 ? "?" : progress.toString() + "%"}`);
     remote.info(`Total shares: ${accepted}/${calcBlocksFromShares()}`);
