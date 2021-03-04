@@ -15,30 +15,18 @@ watch.on("error", async () => {
   }
 
   bot.getUpdates().then((upds) => {
+    let last_ID = 0;
     upds.forEach((upd) => {
-      bot
-        .sendMessage(
+      if (upd.message!.chat.id != last_ID) {
+        bot.sendMessage(
           upd.message!.chat.id,
           "Error occurred. Shadowpool was restarted!"
-        )
-        .then(() => {
-          bot
-            .sendMessage(
-              upd.message!.chat.id,
-              `Check the more details:\n<pre><code class="language-bash">less ~/.shadowlogs/error-debug.log\nless ~/.shadowlogs/error.log\n</code></pre>`,
-              { parse_mode: "HTML" }
-            )
-            .then(() => {
-              bot.sendMessage(
-                upd.message!.chat.id,
-                "p.s. scroll to end hotkeys: Shift + G"
-              );
-            });
-        });
+        );
+        last_ID = upd.message!.chat.id;
+      }
     });
   });
 });
-
 /*bot.onText(/\/start/, (msg, match) => {
   const chatId = msg.chat.id;
   bot.sendMessage(chatId, "You have subscribed to pool notifications");
