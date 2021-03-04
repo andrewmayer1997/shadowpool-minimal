@@ -44,7 +44,7 @@ export const getActiveWorkers = function (): number {
 export const addWorker = function (uid: UID, data: Worker) {
   if (UIDbyName.get(data.name)) {
     if (UIDbyName.get(data.name) == uid) {
-      workers.set(uid, data);
+      makeOnline(data.name);
     } else {
       // @ts-ignore
       workers.delete(UIDbyName.get(data.name));
