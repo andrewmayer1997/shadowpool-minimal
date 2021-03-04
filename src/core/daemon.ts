@@ -120,7 +120,13 @@ export const submitWork = async function (
       UID = UIDbyName.get(name)?.toString();
     }
     if (!workers.get(UID)) {
-      throw new Error(`This worker doesn't exist!`);
+      console.log(`Got share from ??? worker.`);
+      return web3.eth.submitWork(
+        // @ts-ignore
+        shares.get(id)!.powhash,
+        // @ts-ignore
+        autogenkey
+      );
     } else {
       // @ts-ignore
       extranonce = workers.get(UID)?.extranonce;
