@@ -42,15 +42,21 @@ export const getActiveWorkers = function (): number {
 };
 
 export const addWorker = function (uid: UID, data: Worker) {
-  if (!UIDbyName.get(data.name)) {
+  if (UIDbyName.get(data.name)) {
+    if (UIDbyName.get(data.name) == uid) {
+      workers.set(uid, data);
+    } else {
+      // @ts-ignore
+      workers.delete(UIDbyName.get(data.name));
+      UIDbyName.set(data.name, uid);
+      workers.set(uid, data);
+      calcExtranonce();
+    }
+    // @ts-ignore
+  } else {
     UIDbyName.set(data.name, uid);
     workers.set(uid, data);
     calcExtranonce();
-  } else {
-    if (UIDbyName.get(data.name) != uid) {
-      UIDbyName.set(data.name, uid);
-    }
-    workers.set(uid, data);
   }
 };
 
@@ -73,8 +79,6 @@ export const removeWorker = function (ip: string) {
       w.online = false;
       log.info(`Worker ${w.name} is offline!`);
       log.info(`Workers: ${getActiveWorkers()}/${workers.size}}`);
-      log.info(`ExtraNonces was updated`)
-      calcExtranonce()
     }
   });
 };
