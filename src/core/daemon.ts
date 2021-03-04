@@ -140,7 +140,7 @@ export const submitWork = async function (
       autogenkey
     );
   } catch (e) {
-    log.error(e);
+    log.error(e.message);
     //throw new RpcError(<jsonrpc.error>{
     //  code: 400,
     //  message: "",
