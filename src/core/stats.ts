@@ -42,9 +42,16 @@ export const getActiveWorkers = function (): number {
 };
 
 export const addWorker = function (uid: UID, data: Worker) {
-  UIDbyName.set(data.name, uid);
-  workers.set(uid, data);
-  calcExtranonce();
+  if (!UIDbyName.get(data.name)) {
+    UIDbyName.set(data.name, uid);
+    workers.set(uid, data);
+    calcExtranonce();
+  } else {
+    if (UIDbyName.get(data.name) != uid) {
+      UIDbyName.set(data.name, uid);
+    }
+    workers.set(uid, data);
+  }
 };
 
 export const updateHashrate = function (name: string, hashrate: string) {
