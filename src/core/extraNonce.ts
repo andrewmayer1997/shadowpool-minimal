@@ -5,28 +5,27 @@ import log from "../core/utils/logger";
 
 const Min = 0x00;
 const Max = 0xff;
-let last = 0x0;
-
-export const getExtranonceByName = function () {
-  //..
-};
+let last = 0x00;
 
 export const calc = function () {
   const step = Math.floor(Max / getActiveWorkers());
   last -= step;
 
   workers.forEach((w, key) => {
-    stratum.sendNotifyTo(w.ip, <jsonrpc.notification>{
-      method: "mining.set_extranonce",
-      params: [
-        "0x" +
-          Math.floor(last + step)
-            .toString(16)
-            .padStart(2, "0"),
-      ],
-    });
-    w.extranonce = (last + step).toString(16).padStart(2, "0");
-    last += step;
-    log.debug(`Worker: ${w.name}, start at ${w.extranonce}, step ${step}`);
+    if (w.online) {
+      const extraNonce = Math.floor(last + step)
+        .toString(16)
+        .padStart(2, "0");
+
+      stratum.sendNotifyTo(w.ip, <jsonrpc.notification>{
+        method: "mining.set_extranonce",
+        params: ["0x" + extraNonce],
+      });
+      w.extranonce = extraNonce;
+      last += step;
+      log.debug(`Worker: ${w.name}, start at ${w.extranonce}, step ${step}`);
+    } else {
+      log.debug(`Worker with ${key} UID is offline!`);
+    }
   });
 };
