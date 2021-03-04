@@ -44,6 +44,7 @@ export const getActiveWorkers = function (): number {
 export const addWorker = function (uid: UID, data: Worker) {
   if (UIDbyName.get(data.name)) {
     if (UIDbyName.get(data.name) == uid) {
+      updateHashrate(data.name, data.hashrate);
       makeOnline(data.name);
     } else {
       // @ts-ignore
