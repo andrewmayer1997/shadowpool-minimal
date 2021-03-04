@@ -25,7 +25,7 @@ class WhatchLog extends EventEmitter {
   public restart = function () {
     console.log("restarting...");
     const stdout = child_process.execSync(
-      `pkill -f "node-shadowpool"; cd ${path.join(
+      `cd ${path.join(
         // @ts-ignore
         process.env.HOME,
         "NODE",
@@ -35,14 +35,3 @@ class WhatchLog extends EventEmitter {
   };
 }
 export const watch = new WhatchLog();
-
-/*
-require('log-timestamp');
-
-const buttonPressesLogFile = './kek.txt';
-
-console.log(`Watching for file changes on ${buttonPressesLogFile}`);
-
-fs.watchFile(buttonPressesLogFile, (curr, prev) => {
-  console.log(`${buttonPressesLogFile} file Changed`);
-});*/
