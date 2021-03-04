@@ -5,11 +5,10 @@ import log from "../core/utils/logger";
 
 const Min = 0x00;
 const Max = 0xff;
-let last = 0x00;
 
 export const calc = function () {
   const step = Math.floor(Max / getActiveWorkers());
-  last -= step;
+  let last = 0 - step;
 
   workers.forEach((w, key) => {
     if (w.online) {
