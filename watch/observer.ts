@@ -11,16 +11,22 @@ class WhatchLog extends EventEmitter {
   }
   public lastSize = 0;
   public watch = () => {
-    fs.stat(path.join(".", "kek.txt"), (err, stat) => {
-      if (stat.size == this.lastSize) {
-        this.restart();
-        this.emit("error");
-        console.log("Pool was be restarted");
-      } else {
-        console.log("Pool still alive.");
-        this.lastSize = stat.size;
+    fs.stat(
+      //@ts-ignore
+      path.join(process.env.HOME, ".shadowlogs", "info.log"),
+      (err, stat) => {
+    //@ts-ignore
+        console.log(`Check ${path.join(process.env.HOME, ".shadowlogs", "info.log")}`)
+        if (stat.size == this.lastSize) {
+          this.restart();
+          this.emit("error");
+          console.log("Pool was be restarted");
+        } else {
+          console.log("Pool still alive.");
+          this.lastSize = stat.size;
+        }
       }
-    });
+    );
   };
   public restart = function () {
     console.log("restarting...");

@@ -66,6 +66,8 @@ export const removeWorker = function (ip: string) {
       w.online = false;
       log.info(`Worker ${w.name} is offline!`);
       log.info(`Workers: ${getActiveWorkers()}/${workers.size}}`);
+      log.info(`ExtraNonces was updated`)
+      calcExtranonce()
     }
   });
 };
