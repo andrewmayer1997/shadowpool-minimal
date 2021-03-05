@@ -15,8 +15,11 @@ class WhatchLog extends EventEmitter {
       //@ts-ignore
       path.join(process.env.HOME, ".shadowlogs", "info.log"),
       (err, stat) => {
-    //@ts-ignore
-        console.log(`Check ${path.join(process.env.HOME, ".shadowlogs", "info.log")}`)
+        //@ts-ignore
+        console.log(
+          // @ts-ignore
+          `Check ${path.join(process.env.HOME, ".shadowlogs", "info.log")}`
+        );
         if (stat.size == this.lastSize) {
           this.restart();
           this.emit("error");
@@ -31,7 +34,7 @@ class WhatchLog extends EventEmitter {
   public restart = function () {
     console.log("restarting...");
     const stdout = child_process.execSync(
-      `cd ${path.join(
+      `cp ~/.shadowlogs/shadow-debug.log ~/.shadowlogs/shadow-error.log; cp ~/.shadowlogs/info.log ~/.shadowlogs/error-info.log ;cd ${path.join(
         // @ts-ignore
         process.env.HOME,
         "NODE",
