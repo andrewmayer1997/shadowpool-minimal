@@ -8,17 +8,17 @@ import log from "./core/utils/logger";
 //import { back } from "./core/view/server";
 
 process.on("uncaughtException", function (err) {
-  log.error("Caught exception: " + err);
+  log.error("Caught exception: \n" + JSON.stringify(err));
   remote.fatal(`<----------------- ERROR! ----------------->`);
-  remote.fatal(err);
+  remote.fatal(JSON.stringify(err));
   remote.fatal(`<----------------- ERROR! ----------------->`);
   process.exit(1);
 });
 
 process.on("unhandledRejection", function (err) {
-  log.error("Caught rejection: " + err);
+  log.error("Caught rejection: \n" + JSON.stringify(err));
   remote.fatal(`<----------------- ERROR! ----------------->`);
-  remote.fatal(err);
+  remote.fatal(JSON.stringify(err));
   remote.fatal(`<----------------- ERROR! ----------------->`);
   process.exit(1);
 });
