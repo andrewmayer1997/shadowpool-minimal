@@ -5,7 +5,7 @@ module.exports = {
   mode: "production",
   target: "node",
   entry: {
-    //shadow: "./src/shadowpool.ts",
+    shadow: "./src/shadowpool.ts",
     watch: "./watch/bot.ts",
   },
   output: {
