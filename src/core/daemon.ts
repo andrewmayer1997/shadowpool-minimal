@@ -117,6 +117,7 @@ export const submitWork = async function (
       //throw new Error(`This worker doesn't exist!`);
       log.error(`Got share from ??? worker, try submit without extranonce`);
       return web3.eth.submitWork(
+        genNonce(),
         //@ts-ignore
         shares.get(id)!.powhash,
         //@ts-ignore
@@ -129,6 +130,7 @@ export const submitWork = async function (
     if (!workers.get(UID)) {
       console.log(`Got share from ??? worker, try submit without extranonce`);
       return web3.eth.submitWork(
+        genNonce(),
         // @ts-ignore
         shares.get(id)!.powhash,
         // @ts-ignore
