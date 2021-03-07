@@ -140,7 +140,7 @@ export const submitWork = async function (
     }
 
     const genNonce = function (): string {
-      if (extranonce.length == 16) {
+      if (nonce.length == 16) {
         return "0x" + nonce;
       } else {
         return "0x" + String(extranonce + nonce).padStart(16, "0");
