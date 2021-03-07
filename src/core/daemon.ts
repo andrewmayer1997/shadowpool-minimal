@@ -110,8 +110,17 @@ export const submitWork = async function (
   nonce: string,
   name: string
 ): Promise<boolean> {
-  let extranonce: string;
+  let extranonce: string = "";
   let UID: string;
+
+  const genNonce = function (): string {
+    if (nonce.length == 16) {
+      return "0x" + nonce;
+    } else {
+      return "0x" + String(extranonce + nonce).padStart(16, "0");
+    }
+  };
+
   try {
     if (!UIDbyName.get(name)) {
       //throw new Error(`This worker doesn't exist!`);
@@ -140,14 +149,6 @@ export const submitWork = async function (
       // @ts-ignore
       extranonce = workers.get(UID)?.extranonce;
     }
-
-    const genNonce = function (): string {
-      if (nonce.length == 16) {
-        return "0x" + nonce;
-      } else {
-        return "0x" + String(extranonce + nonce).padStart(16, "0");
-      }
-    };
 
     log.debug(`Full nonce: ${genNonce()}`);
     log.debug(`Length: ${genNonce().length}`);
