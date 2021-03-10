@@ -18,7 +18,7 @@ export const calc = function () {
 
       stratum.sendNotifyTo(w.ip, <jsonrpc.notification>{
         method: "mining.set_extranonce",
-        params: [extraNonce],
+        params: ["0x" + extraNonce],
       });
       w.extranonce = extraNonce;
       last += step;

@@ -5,6 +5,7 @@ import { jsonrpc, RpcError } from "./rpc/jsonrpc";
 import log from "./utils/logger";
 import { UIDbyName, workers } from "../core/stats";
 import { updateLastBlockDate } from "./view/ttyout";
+import { watch } from "../../watch/observer";
 
 const autogenkey =
   "0x85f60765a212abec9239c327fcc38a5ece20b491e4f41073568d5c2668ccdffd";
@@ -47,6 +48,7 @@ export const newHeaderSub = async function () {
           "ether"
         )}`
       );
+      watch.emit("block");
       whoMinedLastBlock = "<shadowpool>";
     } else {
       log.info(`New block: ${block.number}`);
@@ -160,7 +162,7 @@ export const submitWork = async function (
       autogenkey
     );
   } catch (e) {
-    log.error(e.message);
+    log.error(`Err:`, JSON.parse(e));
     //throw new RpcError(<jsonrpc.error>{
     //  code: 400,
     //  message: "",

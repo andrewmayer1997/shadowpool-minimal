@@ -41,7 +41,7 @@ namespace stratum {
         .createServer({ allowHalfOpen: false })
         .listen(port, host)
         .on("connection", (s) => {
-          log.info(`Max listeners: 5`);
+          log.info(`Max listeners: 100`);
           s.setMaxListeners(100);
 
           s.setKeepAlive(true);
@@ -60,8 +60,8 @@ namespace stratum {
             s.write(
               serialize(<jsonrpc.notification>{
                 method: "mining.set_difficulty",
-                // ~10G
-                params: [2.5],
+                // ~2G
+                params: [0.8],
               }) + "\n"
             );
           }, 1000);
@@ -96,7 +96,7 @@ namespace stratum {
           });
         });
     } catch (e) {
-      log.info(`Somethings went wrong\n ${e}`);
+      log.info(`Somethings went wrong\n`, JSON.parse(e));
       // throw e;
     }
   };

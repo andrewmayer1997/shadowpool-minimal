@@ -17,8 +17,7 @@ export const msgHandler = async function (
 
   try {
     req = deserialize(data.toString("ascii"));
-    log.debug(`Got request:`);
-    log.debug(req);
+    log.debug(`Got request:`, req);
   } catch (e) {
     log.debug("Invalid request");
     return <jsonrpc.response>{
@@ -67,7 +66,14 @@ export const msgHandler = async function (
       };
     } else {
       log.warn("Something went wrong");
-      throw e;
+      return <jsonrpc.response>{
+        id: req.id,
+        error: <jsonrpc.error>{
+          code: 400,
+          message: "Err!",
+          data: e.message,
+        },
+      };
     }
   }
 };

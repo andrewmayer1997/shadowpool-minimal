@@ -2,12 +2,8 @@ import { shares, submitWork } from "../daemon";
 import { jsonrpc } from "./jsonrpc";
 import log from "../utils/logger";
 import "../stats";
-import {
-  addWorker,
-  Worker,
-  makeOnline,
-  increaseAccepted,
-} from "../stats";
+import { addWorker, Worker, makeOnline, increaseAccepted } from "../stats";
+//import { botNewBlockNotify } from "../../../watch/bot";
 
 export const submit = async function (
   req: jsonrpc.request
@@ -28,6 +24,9 @@ export const submit = async function (
   increaseAccepted();
   //@ts-ignore
   makeOnline(req.worker);
+  //if (isBlock) {
+  //  botNewBlockNotify();
+  //}
   return <jsonrpc.response>{
     id: req.id,
     result: true,

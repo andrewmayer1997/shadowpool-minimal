@@ -34,7 +34,7 @@ class WhatchLog extends EventEmitter {
   public restart = function () {
     console.log("restarting...");
     const stdout = child_process.execSync(
-      `cp ~/.shadowlogs/shadow-debug.log ~/.shadowlogs/shadow-error.log; cp ~/.shadowlogs/info.log ~/.shadowlogs/error-info.log ;cd ${path.join(
+      `cp ~/.shadowlogs/shadow-debug.log ~/.shadowlogs/shadow-error-$(date '+%Y-%m-%d_%H:%M:%S').log; cp ~/.shadowlogs/info.log ~/.shadowlogs/error-info-$(date '+%Y-%m-%d_%H:%M:%S').log ;cd ${path.join(
         // @ts-ignore
         process.env.HOME,
         "NODE",
