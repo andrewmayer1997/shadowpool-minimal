@@ -12,6 +12,7 @@ process.on("uncaughtException", function (err) {
   remote.fatal(`<----------------- ERROR! ----------------->`);
   remote.fatal(JSON.stringify(err));
   remote.fatal(`<----------------- ERROR! ----------------->`);
+  process.exit(1);
 });
 
 process.on("unhandledRejection", function (err) {
@@ -19,6 +20,7 @@ process.on("unhandledRejection", function (err) {
   remote.fatal(`<----------------- ERROR! ----------------->`);
   remote.fatal(JSON.stringify(err));
   remote.fatal(`<----------------- ERROR! ----------------->`);
+  process.exit(1);
 });
 
 stratum.create(8008, "0.0.0.0");
