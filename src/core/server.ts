@@ -81,7 +81,7 @@ namespace stratum {
           });
 
           s.on("error", (e) => {
-            log.error(e);
+            log.error(JSON.stringify(e));
           });
 
           s.on("close", () => {
@@ -96,7 +96,7 @@ namespace stratum {
           });
         });
     } catch (e) {
-      log.info(`Somethings went wrong\n`, JSON.parse(e));
+      log.info(`Somethings went wrong\n`, JSON.stringify(e));
       // throw e;
     }
   };
