@@ -8,9 +8,9 @@ import { addWorker, Worker, makeOnline, increaseAccepted } from "../stats";
 export const submit = async function (
   req: jsonrpc.request
 ): Promise<jsonrpc.response> {
-  
+
   const checkWorkRelevance = (id: string): boolean => {
-    if (shares.get((Number(id) + 1).toString())) {
+    if (shares.get((Number(id) + 15).toString())) {
       return false;
     } else {
       return true;
