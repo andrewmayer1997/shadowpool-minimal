@@ -8,6 +8,15 @@ import { addWorker, Worker, makeOnline, increaseAccepted } from "../stats";
 export const submit = async function (
   req: jsonrpc.request
 ): Promise<jsonrpc.response> {
+  
+  const checkWorkRelevance = (id: string): boolean => {
+    if (shares.get((Number(id) + 1).toString())) {
+      return false;
+    } else {
+      return true;
+    }
+  };
+
   const isBlock = await submitWork(
     //@ts-ignore
     req.params[1],
@@ -29,7 +38,8 @@ export const submit = async function (
   //}
   return <jsonrpc.response>{
     id: req.id,
-    result: true,
+    //@ts-ignore
+    result: checkWorkRelevance(req.params[1]),
   };
 };
 

@@ -98,10 +98,10 @@ export const shares = new Map<string, Share>();
 const newWorkHandler = function (raw: Buffer) {
   const data = JSON.parse(raw.toString());
 
-  stratum.sendNotify(<jsonrpc.notification>{
-    method: "mining.notify",
-    params: [(shares.size + 1).toString(), data[1], data[0], true],
-  });
+  //stratum.sendNotify(<jsonrpc.notification>{
+  //  method: "mining.notify",
+ //   params: [(shares.size + 1).toString(), data[1], data[0], true],
+ // });
   shares.set((shares.size + 1).toString(), <Share>{
     powhash: data[0],
   });
