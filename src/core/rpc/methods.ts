@@ -8,8 +8,9 @@ import { addWorker, Worker, makeOnline, increaseAccepted } from "../stats";
 export const submit = async function (
   req: jsonrpc.request
 ): Promise<jsonrpc.response> {
+  let isBlock = false;
   try {
-    const isBlock = await submitWork(
+    isBlock = await submitWork(
       //@ts-ignore
       req.params[1],
       // @ts-ignore
