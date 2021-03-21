@@ -1,5 +1,5 @@
 import { shares, submitWork } from "../daemon";
-import { jsonrpc } from "./jsonrpc";
+import { jsonrpc, RpcError } from "./jsonrpc";
 import log from "../utils/logger";
 import "../stats";
 import { addWorker, Worker, makeOnline, increaseAccepted } from "../stats";
@@ -8,13 +8,22 @@ import { addWorker, Worker, makeOnline, increaseAccepted } from "../stats";
 export const submit = async function (
   req: jsonrpc.request
 ): Promise<jsonrpc.response> {
-  const isBlock = await submitWork(
-    //@ts-ignore
-    req.params[1],
-    // @ts-ignore
-    req.params[2],
-    req.worker!.toString()
-  );
+  try {
+    const isBlock = await submitWork(
+      //@ts-ignore
+      req.params[1],
+      // @ts-ignore
+      req.params[2],
+      req.worker!.toString()
+    );
+  } catch (e) {
+    if (e instanceof RpcError) {
+      return <jsonrpc.response>{
+        id: req.id,
+        error: e.rpcmsg,
+      };
+    }
+  }
   log.info(
     // @ts-ignore
     `Checked the share: -- ${isBlock}`

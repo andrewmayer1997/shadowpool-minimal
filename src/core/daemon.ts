@@ -91,6 +91,7 @@ export const start = function () {
 type Share = {
   powhash: string;
   isBlock?: boolean;
+  //id?: string;
 };
 
 export const shares = new Map<string, Share>();
@@ -115,6 +116,17 @@ export const submitWork = async function (
   let extranonce: string = "";
   let UID: string;
 
+  const checkWorkRelevance = (id: string): boolean => {
+    if (shares.get((Number(id) + 1).toString())) {
+      throw new RpcError(<jsonrpc.error>{
+        code: 400,
+        message: "This work is too old.",
+      });
+    } else {
+      return true;
+    }
+  };
+
   const genNonce = function (): string {
     if (nonce.length == 16) {
       return "0x" + nonce;
@@ -124,6 +136,8 @@ export const submitWork = async function (
   };
 
   try {
+    checkWorkRelevance(id);
+
     if (!UIDbyName.get(name)) {
       //throw new Error(`This worker doesn't exist!`);
       log.error(`Got share from ??? worker, try submit without extranonce`);
@@ -168,6 +182,10 @@ export const submitWork = async function (
     //  message: "",
     //  data: e,
     //});
-    return false;
+    if (e instanceof RpcError) {
+      throw e;
+    } else {
+      return false;
+    }
   }
 };
