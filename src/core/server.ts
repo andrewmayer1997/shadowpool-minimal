@@ -12,9 +12,13 @@ namespace stratum {
     log.debug(notify);
     const raw = serialize(notify) + "\n";
 
-    clients.forEach((client) => {
-      client.write(raw);
-    });
+    try {
+      clients.forEach((client) => {
+        client.write(raw);
+      });
+    } catch (e) {
+      log.error(`Unable to send notify for all client`, JSON.stringify(e));
+    }
   };
 
   export const sendNotifyTo = async function (
@@ -23,9 +27,15 @@ namespace stratum {
   ) {
     log.debug(`Send notification for ${ip}`);
     log.debug(notify);
-    const raw = serialize(notify) + "\n";
 
-    clients.get(ip)!.write(raw);
+    const raw = serialize(notify) + "\n";
+    const client = clients.get(ip);
+
+    try {
+      client?.write(raw);
+    } catch (e) {
+      log.error(`Unable to send notify to ${ip}`, JSON.stringify(e));
+    }
   };
 
   export const create = function (
@@ -96,7 +106,7 @@ namespace stratum {
           });
         });
     } catch (e) {
-      log.info(`Somethings went wrong\n`, JSON.stringify(e));
+      log.error(`Somethings went wrong\n`, JSON.stringify(e));
       // throw e;
     }
   };

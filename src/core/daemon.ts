@@ -117,6 +117,7 @@ export const submitWork = async function (
 
   const genNonce = function (): string {
     if (nonce.length == 16) {
+      log.info(`Got nonce with length 16 !!!`)
       return "0x" + nonce;
     } else {
       return "0x" + String(extranonce + nonce).padStart(16, "0");
