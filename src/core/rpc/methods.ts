@@ -2,21 +2,28 @@ import { shares, submitWork } from "../daemon";
 import { jsonrpc } from "./jsonrpc";
 import log from "../utils/logger";
 import "../stats";
-import { addWorker, Worker, makeOnline, increaseAccepted } from "../stats";
+import {
+  addWorker,
+  Worker,
+  makeOnline,
+  increaseAccepted,
+  increaseRejShares,
+} from "../stats";
 //import { botNewBlockNotify } from "../../../watch/bot";
+
+const checkWorkRelevance = (id: string): boolean => {
+  if (shares.get((Number(id) + 10).toString())) {
+    increaseRejShares();
+    return false;
+  } else {
+    increaseAccepted();
+    return true;
+  }
+};
 
 export const submit = async function (
   req: jsonrpc.request
 ): Promise<jsonrpc.response> {
-
-  const checkWorkRelevance = (id: string): boolean => {
-    if (shares.get((Number(id) + 15).toString())) {
-      return false;
-    } else {
-      return true;
-    }
-  };
-
   const isBlock = await submitWork(
     //@ts-ignore
     req.params[1],
@@ -30,12 +37,13 @@ export const submit = async function (
   );
   // @ts-ignore
   shares.get(req.params[1])!.isBlock = isBlock;
-  increaseAccepted();
+
   //@ts-ignore
   makeOnline(req.worker);
   //if (isBlock) {
   //  botNewBlockNotify();
   //}
+
   return <jsonrpc.response>{
     id: req.id,
     //@ts-ignore

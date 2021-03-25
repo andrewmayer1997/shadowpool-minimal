@@ -16,20 +16,12 @@ const stream = fs.createWriteStream(
 function logToTransport(logObject: ILogObject) {
   const log = logObject.toJSON();
   stream.write(
-    "[" +
-      log.date.getDay().toString().padStart(2, '0') +
-      "." +
-      log.date.getMonth().toString().padStart(2, '0') +
-      " " +
-      log.date.getHours().toString().padStart(2, '0') +
-      ":" +
-      log.date.getMinutes().toString().padStart(2, '0') +
-      "]" +
-      " [" +
+    log.date.toLocaleString() +
+      " < " +
       log.logLevel +
-      "] " +
-      log.argumentsArray +
-      "\n\n"
+      " > " +
+      log.argumentsArray.toString() +
+      "\n"
   );
 }
 

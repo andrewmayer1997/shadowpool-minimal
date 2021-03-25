@@ -1,5 +1,5 @@
 import "../server";
-import { workers, accepted, getActiveWorkers } from "../stats";
+import { workers, accepted, getActiveWorkers, rej } from "../stats";
 import { whoMinedLastBlock, lastBlock, shares } from "../daemon";
 import { calcPoolHashrate } from "../stats";
 import { web3 } from "../daemon";
@@ -69,6 +69,7 @@ const update = async function () {
     remote.info(`Time passed: ${prettyTime(passed)}`);
     remote.info(`Progress: ${progress < 0 ? "?" : progress.toString() + "%"}`);
     remote.info(`Total shares: ${accepted}/${calcBlocksFromShares()}`);
+    remote.info(`Rejected: ${rej}`);
     remote.info("");
   });
 };

@@ -16,9 +16,14 @@ export let workers = new Map<UID, Worker>();
 //export let activeWorkers = 0;
 export let UIDbyName = new Map<string, string>();
 export let accepted: number = 0;
+export let rej: number = 0;
 
 export const increaseAccepted = function () {
   accepted++;
+};
+
+export const increaseRejShares = function () {
+  rej++;
 };
 
 export const calcPoolHashrate = function (): number {
